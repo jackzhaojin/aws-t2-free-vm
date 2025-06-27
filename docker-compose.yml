@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  shadow-pivot-ai:
+    image: ghcr.io/jackzhaojin/shadow-pivot-ai-agentv2:release-latest
+    container_name: shadow-pivot-ai
+    ports:
+      - "80:3000"
+    restart: unless-stopped
+    environment:
+      - AZURE_CLIENT_ID=${AZURE_CLIENT_ID}
+      - AZURE_CLIENT_SECRET=${AZURE_CLIENT_SECRET}
+      - AZURE_TENANT_ID=${AZURE_TENANT_ID}
+      - AZURE_SUBSCRIPTION_ID=${AZURE_SUBSCRIPTION_ID}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
