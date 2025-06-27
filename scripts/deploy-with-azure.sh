@@ -16,7 +16,7 @@ echo "📁 Project directory: $PROJECT_DIR"
 cd "$PROJECT_DIR"
 
 # Load Azure credentials from Parameter Store
-source "$SCRIPT_DIR/get-azure-secrets.sh"
+source "$SCRIPT_DIR/get-azure-sercrets.sh"
 
 # Pull latest image
 echo "📥 Pulling latest image..."
