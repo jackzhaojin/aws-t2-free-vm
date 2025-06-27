@@ -24,7 +24,11 @@ docker-compose pull
 
 # Stop and remove existing containers
 echo "🛑 Stopping existing containers..."
-docker-compose down
+docker-compose down --remove-orphans
+
+# Clean up any conflicting containers
+echo "🧹 Cleaning up any conflicting containers..."
+docker container rm -f shadow-pivot-ai 2>/dev/null || true
 
 # Start services
 echo "🆙 Starting services..."
