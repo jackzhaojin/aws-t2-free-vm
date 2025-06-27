@@ -20,22 +20,22 @@ source "$SCRIPT_DIR/get-azure-sercrets.sh"
 
 # Pull latest image
 echo "📥 Pulling latest image..."
-docker compose pull
+docker-compose pull
 
 # Stop and remove existing containers
 echo "🛑 Stopping existing containers..."
-docker compose down
+docker-compose down
 
 # Start services
 echo "🆙 Starting services..."
-docker compose up -d
+docker-compose up -d
 
 # Wait for service to be ready
 echo "⏳ Waiting for service to be ready..."
 timeout 60 bash -c 'until curl -f http://localhost/health 2>/dev/null; do sleep 2; done' || {
     echo "❌ Service failed to start properly"
     echo "📋 Container logs:"
-    docker compose logs
+    docker-compose logs
     exit 1
 }
 
@@ -45,5 +45,5 @@ PUBLIC_IP=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4 2>/dev/n
 echo ""
 echo "✅ Deployment complete!"
 echo "🌐 Service available at: http://$PUBLIC_IP"
-echo "📊 Check status with: docker compose ps"
-echo "📋 View logs with: docker compose logs -f"
+echo "📊 Check status with: docker-compose ps"
+echo "📋 View logs with: docker-compose logs -f"
